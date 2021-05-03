@@ -15,9 +15,9 @@ const handleRoom = (socket, uid) => {
 
     rooms[roomId] = {
       mode: "Tic-Tac-Toe",
-      owner: socket.id,
-      playerOne: socket.id,
-      playerTwo: ""
+      owner: uid,
+      maxPlayers: 2,
+      players: [uid]
     }
     socket.join(roomId)
     console.log("Create a new room", roomId)
@@ -54,7 +54,7 @@ const handleRoom = (socket, uid) => {
 
   socket.on("getRoomDetails", (data) => {
     const { roomId } = data
-    const currentSocketId = socket.id
+    const currentSocketId = uid
 
     if (rooms[roomId] === undefined) {
       return socket.emit("getRoomDetailsResponse", {

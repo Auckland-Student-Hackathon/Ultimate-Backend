@@ -4,7 +4,7 @@ const { GAME_MODE_TYPE } = require("./constants")
 const handleLobby = (socket, uid) => {
   socket.on("changeGameMode", (data) => {
     const { roomId, mode } = data
-    const currentSocketId = socket.id
+    const currentSocketId = uid
 
     console.log(roomId, mode, currentSocketId)
 
