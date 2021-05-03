@@ -15,12 +15,12 @@ const handleLobby = (socket) => {
       })
     }
 
-    // if (rooms[roomId]["owner"] !== currentSocketId) {
-    //   return socket.emit("changeGameModeResponse", {
-    //     success: false,
-    //     message: "Only the owner can change the room's game mode."
-    //   })
-    // }
+    if (rooms[roomId]["owner"] !== currentSocketId) {
+      return socket.emit("changeGameModeResponse", {
+        success: false,
+        message: "Only the owner can change the room's game mode."
+      })
+    }
 
     if (GAME_MODE_TYPE[mode] === undefined) {
       return socket.emit("changeGameModeResponse", {
