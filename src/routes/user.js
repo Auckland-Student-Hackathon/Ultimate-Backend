@@ -20,6 +20,10 @@ userRoute.route("/user")
   .get(async (req, res) => {
     const headerUid = req.header.uid
 
+    if (headerUid == null || headerUid === "") {
+      return res.status(400).send("Bad Request.")
+    }
+
     let uidSearchUp = headerUid
 
     try {
@@ -40,10 +44,10 @@ userRoute.route("/user")
    *         description: The user's UID.
    */
   .post(async (req, res) => {
-    const data = req.body.data
+    const data = req.body
     const headerUid = req.header.uid
 
-    if (headerUid === "") {
+    if (headerUid === "" || headerUid == null) {
       return res.status(400).send("Bad request.")
     }
 
@@ -83,7 +87,7 @@ userRoute.route("/update-profile")
   .post(async (req, res) => {
     const headerUid = req.header.uid
 
-    if (headerUid === "") {
+    if (headerUid === "" || headerUid == null) {
       return res.status(400).send("Bad request.")
     }
 
