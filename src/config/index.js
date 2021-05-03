@@ -22,5 +22,11 @@ module.exports = {
   /**
    * Node environment
    */
-  NODE_ENV: process.env.NODE_ENV || "development"
+  NODE_ENV: process.env.NODE_ENV || "development",
+
+  /**
+   * Firebase Config File
+   * JSON stringify and encoded in base 64
+   */
+  FIREBASE_SERVICE_ACCOUNT: process.env.FIREBASE_SERVICE_ACCOUNT
 }
