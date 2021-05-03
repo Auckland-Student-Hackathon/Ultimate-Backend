@@ -9,7 +9,8 @@ const {
   swaggerUi
 } = require("./src/middleware")
 const {
-  onConnection
+  onConnection,
+  handleAuth
 } = require("./src/socket")
 const cors = require("cors")
 
@@ -30,6 +31,7 @@ const io = socketIo(server, {
   }
 })
 
+io.use(handleAuth)
 onConnection(io)
 
 if (config.NODE_ENV !== "production") {

@@ -3,7 +3,8 @@ const { handleLobby } = require("./handleLobby")
 
 const onConnection = (io) => {
   io.on("connection", socket => {
-    console.log("New client has been connected.", socket.id)
+    const uid = socket.handshake.query.uid
+    console.log("New client has been connected.", uid, socket.id)
 
     // console.log("Current user's room", socket.rooms)
 
@@ -16,11 +17,11 @@ const onConnection = (io) => {
     })
 
     socket.on("disconnect", () => {
-      console.log("Client has disconnected.", socket.id)
+      console.log("Client has disconnected.", uid, socket.id)
     })
 
-    handleRoom(socket)
-    handleLobby(socket)
+    handleRoom(socket, uid)
+    handleLobby(socket, uid)
   })
 }
 

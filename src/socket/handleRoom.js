@@ -2,7 +2,7 @@ const { GAME_MODE_TYPE } = require("./constants")
 
 const rooms = {}
 
-const handleRoom = (socket) => {
+const handleRoom = (socket, uid) => {
   socket.on("createRoom", (data) => {
     const { roomId } = data
 
