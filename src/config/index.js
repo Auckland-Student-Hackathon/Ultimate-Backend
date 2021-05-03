@@ -2,9 +2,11 @@ const dotenv = require('dotenv');
 const path = require("path")
 
 const envFound = dotenv.config()
-if (envFound.error) {
-  throw new Error("⚠️  Couldn't find .env file  ⚠️");
-}
+// When deployed to Heroku, the process.env is already loaded
+// Therefore, no need to check 
+// if (envFound.error) {
+//   throw new Error("⚠️  Couldn't find .env file  ⚠️");
+// }
 
 module.exports = {
   /**
