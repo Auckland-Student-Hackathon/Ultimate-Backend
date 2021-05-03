@@ -8,10 +8,14 @@ userRoute.route("/user")
    * @openapi
    * /user:
    *   get:
-   *     description: Welcome to swagger-jsdoc!
+   *     description: Return the requested user information
    *     responses:
    *       200:
-   *         description: Returns a mysterious string.
+   *         description: An object of the user's data
+   *         content:
+   *          application/json:
+   *            schema:
+   *              type: object
    */
   .get(async (req, res) => {
     const headerUid = req.header.uid
@@ -30,10 +34,10 @@ userRoute.route("/user")
    * @openapi
    * /user:
    *   post:
-   *     description: Welcome to swagger-jsdoc!
+   *     description: Add a new user into the system.
    *     responses:
    *       200:
-   *         description: Returns a mysterious string.
+   *         description: The user's UID.
    */
   .post(async (req, res) => {
     const data = req.body.data
@@ -67,6 +71,15 @@ userRoute.route("/user")
   })
 
 userRoute.route("/update-profile")
+  /**
+     * @openapi
+     * /update-profile:
+     *   post:
+     *     description: Update the user's information.
+     *     responses:
+     *       200:
+     *         description: Empty.
+     */
   .post(async (req, res) => {
     const headerUid = req.header.uid
 
