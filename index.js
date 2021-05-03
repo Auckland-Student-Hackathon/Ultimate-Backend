@@ -37,6 +37,12 @@ if (config.NODE_ENV !== "production") {
   app.use(morgan('dev'))
 }
 
+app.get("", async (req, res) => {
+  return res.status(200).send(
+    "<p>Welcome to Ultimate Game Center's Backend :)</p>" +
+    "<p>Bye. Have a good day!</p>"
+  )
+})
 app.use(express.json())
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 // app.use("", checkFirebaseToken)
