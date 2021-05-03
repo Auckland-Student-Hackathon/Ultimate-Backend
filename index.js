@@ -2,7 +2,6 @@ const express = require('express')
 const http = require("http")
 const socketIo = require("socket.io")
 const config = require('./src/config')
-const morgan = require('morgan')
 const { userRoute } = require('./src/routes')
 const {
   checkFirebaseToken,
@@ -34,6 +33,7 @@ const io = socketIo(server, {
 onConnection(io)
 
 if (config.NODE_ENV !== "production") {
+  const morgan = require('morgan')
   app.use(morgan('dev'))
 }
 
