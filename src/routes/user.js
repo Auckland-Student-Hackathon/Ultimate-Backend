@@ -15,34 +15,12 @@ userRoute.route("/user")
    */
   .get(async (req, res) => {
     const headerUid = req.header.uid
-    const uid = req.params.uid
 
-    let uidSearchUp = ""
-    const selfLookup = uid === undefined
-
-    if (selfLookup) {
-      // Uid query not passed in
-      // Therefore, this is an user requesting 
-      // for their own details
-      uidSearchUp = headerUid
-    } else {
-      uidSearchUp = uid
-    }
+    let uidSearchUp = headerUid
 
     try {
       const result = await User.findOne({ uid: uidSearchUp }).lean().exec()
-      if (result === null) {
-        return res.status(200).json({})
-      }
-      const protectedResult = {
-        nickname: result.nickname,
-        license_level: result.license_level,
-        preferred_pace: result.preferred_pace,
-        make: result.bike_details[0].make,
-        model: result.bike_details[0].model,
-        size: result.bike_details[0].size,
-      }
-      return res.status(200).json(protectedResult)
+      return res.status(200).json(result || {})
     } catch (err) {
       console.error("GET user error", err)
       return res.status(500).json(err)
@@ -59,24 +37,26 @@ userRoute.route("/user")
    */
   .post(async (req, res) => {
     const data = req.body.data
+    const headerUid = req.header.uid
+
+    if (headerUid === "") {
+      return res.status(400).send("Bad request.")
+    }
 
     try {
       const check = await User.findOne({
-        uid: data.uid
+        uid: headerUid
       }).select("").lean().exec()
       if (check !== null) {
+        // The user already exist
         return res.status(200).send("ok")
       }
       const newUser = await User.findOneAndUpdate({
-        uid: data.uid,
+        uid: headerUid,
       }, {
-        uid: data.uid,
-        nickname: data.nickname,
-        email: data.email,
-        bike_details: data.bike_details,
-        license_level: data.license_level,
-        preferred_pace: data.preferred_pace,
-        role: "user"
+        uid: headerUid,
+        name: data.name,
+        email: data.email
       }, { upsert: true, new: true }).select("").lean().exec()
 
       return res.status(200).json(newUser["_id"])
@@ -97,13 +77,10 @@ userRoute.route("/update-profile")
     const data = req.body
 
     try {
-      const newUser = await User.findOneAndUpdate({
+      await User.findOneAndUpdate({
         uid: headerUid,
       }, {
-        nickname: data.nickname,
-        bike_details: data.bike_details,
-        license_level: data.license_level,
-        preferred_pace: data.preferred_pace
+        name: data.name
       }, { new: true }).select("").lean().exec()
 
       return res.status(200).json({})
