@@ -77,6 +77,9 @@ const handleGame = (socket, uid) => {
     })
 
     if (winnerUid !== null) {
+      const players = roomObj["players"]
+      console.log("players", players)
+      console.log("winnerUid", winnerUid)
       socket.to(roomId).emit("gameWinnerFound", {
         success: true,
         winner: winnerUid
