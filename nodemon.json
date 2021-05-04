@@ -9,7 +9,8 @@
     "js": "node --harmony"
   },
   "watch": [
-    "src/"
+    "src/",
+    "index.js"
   ],
   "ext": "js,json"
 }

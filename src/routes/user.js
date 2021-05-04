@@ -8,41 +8,27 @@ userRoute.route("/user")
    * @openapi
    * /user:
    *   get:
-   *     description: Welcome to swagger-jsdoc!
+   *     description: Return the requested user information
    *     responses:
    *       200:
-   *         description: Returns a mysterious string.
+   *         description: An object of the user's data
+   *         content:
+   *          application/json:
+   *            schema:
+   *              type: object
    */
   .get(async (req, res) => {
     const headerUid = req.header.uid
-    const uid = req.params.uid
 
-    let uidSearchUp = ""
-    const selfLookup = uid === undefined
-
-    if (selfLookup) {
-      // Uid query not passed in
-      // Therefore, this is an user requesting 
-      // for their own details
-      uidSearchUp = headerUid
-    } else {
-      uidSearchUp = uid
+    if (headerUid == null || headerUid === "") {
+      return res.status(400).send("Bad Request.")
     }
+
+    let uidSearchUp = headerUid
 
     try {
       const result = await User.findOne({ uid: uidSearchUp }).lean().exec()
-      if (result === null) {
-        return res.status(200).json({})
-      }
-      const protectedResult = {
-        nickname: result.nickname,
-        license_level: result.license_level,
-        preferred_pace: result.preferred_pace,
-        make: result.bike_details[0].make,
-        model: result.bike_details[0].model,
-        size: result.bike_details[0].size,
-      }
-      return res.status(200).json(protectedResult)
+      return res.status(200).json(result || {})
     } catch (err) {
       console.error("GET user error", err)
       return res.status(500).json(err)
@@ -52,31 +38,36 @@ userRoute.route("/user")
    * @openapi
    * /user:
    *   post:
-   *     description: Welcome to swagger-jsdoc!
+   *     description: Add a new user into the system.
    *     responses:
    *       200:
-   *         description: Returns a mysterious string.
+   *         description: The user's UID.
    */
   .post(async (req, res) => {
-    const data = req.body.data
+    const data = req.body
+    const headerUid = req.header.uid
+
+    if (headerUid === "" || headerUid == null) {
+      return res.status(400).send("Bad request.")
+    }
 
     try {
       const check = await User.findOne({
-        uid: data.uid
+        uid: headerUid
       }).select("").lean().exec()
       if (check !== null) {
-        return res.status(200).send("ok")
+        // The user already exist
+        return res.status(400).send("The user already exist.")
       }
       const newUser = await User.findOneAndUpdate({
-        uid: data.uid,
+        uid: headerUid,
       }, {
-        uid: data.uid,
-        nickname: data.nickname,
+        uid: headerUid,
+        name: data.name,
         email: data.email,
-        bike_details: data.bike_details,
-        license_level: data.license_level,
-        preferred_pace: data.preferred_pace,
-        role: "user"
+        points: 0,
+        wins: 0,
+        loses: 0
       }, { upsert: true, new: true }).select("").lean().exec()
 
       return res.status(200).json(newUser["_id"])
@@ -87,23 +78,29 @@ userRoute.route("/user")
   })
 
 userRoute.route("/update-profile")
+  /**
+     * @openapi
+     * /update-profile:
+     *   post:
+     *     description: Update the user's information.
+     *     responses:
+     *       200:
+     *         description: Empty.
+     */
   .post(async (req, res) => {
     const headerUid = req.header.uid
 
-    if (headerUid === "") {
+    if (headerUid === "" || headerUid == null) {
       return res.status(400).send("Bad request.")
     }
 
     const data = req.body
 
     try {
-      const newUser = await User.findOneAndUpdate({
+      await User.findOneAndUpdate({
         uid: headerUid,
       }, {
-        nickname: data.nickname,
-        bike_details: data.bike_details,
-        license_level: data.license_level,
-        preferred_pace: data.preferred_pace
+        name: data.name
       }, { new: true }).select("").lean().exec()
 
       return res.status(200).json({})
