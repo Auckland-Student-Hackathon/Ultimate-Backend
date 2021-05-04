@@ -48,7 +48,36 @@ const handleGameMove = (roomObject, index, uid) => {
   ]
 }
 
+const calculateWinner = (roomObject) => {
+  console.log("roomObject roomObject", roomObject["status"]["gameObject"])
+  const gameObject = roomObject["status"]["gameObject"]
+  const checkObj = {}
+  const players = []
+  let winnerUid = null
+  for (const obj of gameObject) {
+    if (obj.playerUid !== null) {
+      if (checkObj[obj.playerUid] === undefined) {
+        checkObj[obj.playerUid] = [obj.id]
+        players.push(obj.playerUid)
+      } else {
+        checkObj[obj.playerUid] = [
+          ...checkObj[obj.playerUid],
+          obj.id
+        ]
+      }
+      if (obj.id === 9) {
+        winnerUid = obj.playerUid
+        break
+      }
+    }
+  }
+  console.log("checkObj", checkObj)
+  console.log("players", players)
+  return winnerUid
+}
+
 module.exports = {
   setupGameTicTacToe,
-  handleGameMove
+  handleGameMove,
+  calculateWinner
 }

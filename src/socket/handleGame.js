@@ -2,7 +2,8 @@ const { rooms } = require("./handleRoom")
 const { GAME_MODE_TYPE } = require("./constants")
 const {
   setupGameTicTacToe,
-  handleGameMove
+  handleGameMove,
+  calculateWinner
 } = require("./games/ticTacToe")
 
 const handleGame = (socket, uid) => {
@@ -57,10 +58,12 @@ const handleGame = (socket, uid) => {
     }
 
     let newGameStatus = {}
+    let winnerUid = null
     // Generate the game board based on the game type
     if (roomObj["mode"] === GAME_MODE_TYPE["Tic-Tac-Toe"]) {
       handleGameMove(roomObj, index, uid)
       newGameStatus = roomObj["status"]
+      winnerUid = calculateWinner(roomObj)
     }
 
     socket.to(roomId).emit("gameMoveResponse", {
@@ -68,10 +71,24 @@ const handleGame = (socket, uid) => {
       data: newGameStatus
     })
 
-    return socket.emit("gameMoveResponse", {
+    socket.emit("gameMoveResponse", {
       success: true,
       data: newGameStatus
     })
+
+    if (winnerUid !== null) {
+      socket.to(roomId).emit("gameWinnerFound", {
+        success: true,
+        winner: winnerUid
+      })
+
+      return socket.emit("gameWinnerFound", {
+        success: true,
+        winner: winnerUid
+      })
+    } else {
+      console.log("THERE IS NO WINNER")
+    }
   })
 }
 
