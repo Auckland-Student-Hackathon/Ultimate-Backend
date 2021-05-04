@@ -64,8 +64,7 @@ const handleRoom = (socket, uid) => {
     }
 
     if (
-      rooms[roomId]["playerOne"] !== currentSocketId &&
-      rooms[roomId]["playerTwo"] !== currentSocketId
+      !rooms[roomId]["players"].includes(currentSocketId)
     ) {
       return socket.emit("getRoomDetailsResponse", {
         success: false,
