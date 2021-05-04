@@ -1,5 +1,6 @@
 const { handleRoom } = require("./handleRoom")
 const { handleLobby } = require("./handleLobby")
+const { handleGame } = require("./handleGame")
 
 const onConnection = (io) => {
   io.on("connection", socket => {
@@ -22,6 +23,7 @@ const onConnection = (io) => {
 
     handleRoom(socket, uid)
     handleLobby(socket, uid)
+    handleGame(socket, uid)
   })
 }
 
