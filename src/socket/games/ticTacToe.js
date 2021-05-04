@@ -22,6 +22,30 @@ const handleGameMove = (roomObject, index, uid) => {
     empty: false,
     playerUid: uid
   }
+
+  // Set the current player to the next person 
+  const players = roomObject["players"]
+  let currentPlayersPosition = null
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i]
+    if (player.uid === uid) {
+      currentPlayersPosition = i
+      break
+    }
+  }
+
+  if (currentPlayersPosition === players.length - 1) {
+    gameStatus["currentPlayersTurn"] = players[0]["uid"]
+  } else {
+    gameStatus["currentPlayersTurn"] = players[currentPlayersPosition + 1]["uid"]
+  }
+  gameStatus["moves"] = [
+    ...gameStatus["moves"],
+    {
+      id: index,
+      playerUid: uid
+    }
+  ]
 }
 
 module.exports = {

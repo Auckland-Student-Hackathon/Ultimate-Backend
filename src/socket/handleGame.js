@@ -48,11 +48,30 @@ const handleGame = (socket, uid) => {
 
     const roomObj = rooms[roomId]
 
+    if (rooms[roomId] === undefined) {
+      return
+      // return socket.emit("getGameStatusResponse", {
+      //   success: false,
+      //   message: "The room ID does not exist."
+      // })
+    }
+
     let newGameStatus = {}
     // Generate the game board based on the game type
     if (roomObj["mode"] === GAME_MODE_TYPE["Tic-Tac-Toe"]) {
-      newGameStatus = handleGameMove(roomObj, index, uid)
+      handleGameMove(roomObj, index, uid)
+      newGameStatus = roomObj["status"]
     }
+
+    socket.to(roomId).emit("gameMoveResponse", {
+      success: true,
+      data: newGameStatus
+    })
+
+    return socket.emit("gameMoveResponse", {
+      success: true,
+      data: newGameStatus
+    })
   })
 }
 
