@@ -15,6 +15,15 @@ const userSchema = new Schema({
     type: String,
     index: true,
     required: true
+  },
+  points: {
+    type: Schema.Types.Number
+  },
+  wins: {
+    type: Schema.Types.Number
+  },
+  loses: {
+    type: Schema.Types.Number
   }
 })
 

@@ -5,6 +5,7 @@ const {
   handleGameMove,
   calculateWinner
 } = require("./games/ticTacToe")
+const { gameFinishedFunction } = require("./functions")
 
 const handleGame = (socket, uid) => {
   socket.on("getGameStatus", (data) => {
@@ -44,7 +45,7 @@ const handleGame = (socket, uid) => {
     })
   })
 
-  socket.on("gameMove", (data) => {
+  socket.on("gameMove", async (data) => {
     const { roomId, index } = data
 
     const roomObj = rooms[roomId]
@@ -80,6 +81,9 @@ const handleGame = (socket, uid) => {
       const players = roomObj["players"]
       console.log("players", players)
       console.log("winnerUid", winnerUid)
+
+      await gameFinishedFunction(players, winnerUid)
+
       socket.to(roomId).emit("gameWinnerFound", {
         success: true,
         winner: winnerUid
