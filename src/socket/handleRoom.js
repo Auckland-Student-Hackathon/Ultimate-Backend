@@ -75,7 +75,25 @@ const handleRoom = (socket, uid) => {
 
     // Check if the room is available to be joined
     const roomObject = rooms[roomId]
-    if (roomObject.players.length >= roomObject.maxPlayers) {
+    const playersArr = roomObject["players"]
+
+    let playerAlreadyExistInRoom = false
+    for (const obj of playersArr) {
+      if (obj.uid === uid) {
+        playerAlreadyExistInRoom = true
+      }
+    }
+
+    if (playerAlreadyExistInRoom) {
+      return socket.emit("joinRoomResponse", {
+        success: true,
+        message: "Successfully joined the room.",
+        roomId: roomId
+      })
+    }
+
+    if (playersArr.length >= roomObject.maxPlayers) {
+      console.log("room is full", roomObject)
       return socket.emit("joinRoomResponse", {
         success: false,
         message: `The room is full.`
@@ -90,6 +108,14 @@ const handleRoom = (socket, uid) => {
       }
     } catch (err) {
       console.error("handleRoom playerDoc error", err)
+    }
+
+    if (roomObject["owner"] === uid) {
+      return socket.emit("joinRoomResponse", {
+        success: true,
+        message: "Successfully joined the room.",
+        roomId: roomId
+      })
     }
 
     const newPlayerObj = {

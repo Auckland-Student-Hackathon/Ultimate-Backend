@@ -33,12 +33,14 @@ const handleLobby = (socket, uid) => {
     rooms[roomId]["mode"] = mode
     socket.to(roomId).emit("changeGameModeResponse", {
       success: true,
-      message: `The game mode has been updated to ${GAME_MODE_TYPE[mode]}`
+      message: `The game mode has been updated to ${GAME_MODE_TYPE[mode]}`,
+      mode: GAME_MODE_TYPE[mode]
     })
 
     return socket.emit("changeGameModeResponse", {
       success: true,
-      message: `The game mode has been updated to ${GAME_MODE_TYPE[mode]}`
+      message: `The game mode has been updated to ${GAME_MODE_TYPE[mode]}`,
+      mode: GAME_MODE_TYPE[mode]
     })
   })
 
