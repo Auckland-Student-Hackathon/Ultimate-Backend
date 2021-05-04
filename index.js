@@ -2,7 +2,10 @@ const express = require('express')
 const http = require("http")
 const socketIo = require("socket.io")
 const config = require('./src/config')
-const { userRoute } = require('./src/routes')
+const {
+  userRoute,
+  leaderboardRoute
+} = require('./src/routes')
 const {
   checkFirebaseToken,
   swaggerSpecs,
@@ -51,7 +54,8 @@ app.use("", checkFirebaseToken)
 
 app.use(
   "",
-  userRoute
+  userRoute,
+  leaderboardRoute
 )
 
 server.listen(PORT, () => {
