@@ -76,8 +76,34 @@ const calculateWinner = (roomObject) => {
   return winnerUid
 }
 
+const resetGame = (rooms, roomId) => {
+  const roomObj = rooms[roomId]
+  const playerArr = []
+
+  for (player of roomObj.players) {
+    if (player.role === "owner") {
+      playerArr.push(player)
+    } else {
+      playerArr.push({
+        ...player,
+        ready: false
+      })
+    }
+  }
+
+  const resetRoomObj = {
+    mode: roomObj.mode,
+    owner: roomObj.owner,
+    maxPlayers: roomObj.maxPlayers,
+    players: playerArr,
+    started: false,
+  }
+  rooms[roomId] = resetRoomObj
+}
+
 module.exports = {
   setupGameTicTacToe,
   handleGameMove,
-  calculateWinner
+  calculateWinner,
+  resetGame
 }

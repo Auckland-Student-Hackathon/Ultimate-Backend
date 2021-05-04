@@ -60,8 +60,18 @@ const handleLobby = (socket, uid) => {
       })
     }
 
-    // Check if all players are ready
     const roomObj = rooms[roomId]
+
+    // Check if maximum players are reached
+    const maxPlayers = roomObj["maxPlayers"]
+    if (maxPlayers !== roomObj["players"].length) {
+      return socket.emit("startGameResponse", {
+        success: false,
+        message: `Please wait for more players to join!`
+      })
+    }
+
+    // Check if all players are ready
     let playersAreReady = true
     for (const player of roomObj["players"]) {
       if (!player.ready) {

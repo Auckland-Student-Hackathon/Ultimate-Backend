@@ -3,7 +3,8 @@ const { GAME_MODE_TYPE } = require("./constants")
 const {
   setupGameTicTacToe,
   handleGameMove,
-  calculateWinner
+  calculateWinner,
+  resetGame
 } = require("./games/ticTacToe")
 const { gameFinishedFunction } = require("./functions")
 
@@ -83,6 +84,11 @@ const handleGame = (socket, uid) => {
       console.log("winnerUid", winnerUid)
 
       await gameFinishedFunction(players, winnerUid)
+
+      // Reset the game
+      if (roomObj["mode"] === GAME_MODE_TYPE["Tic-Tac-Toe"]) {
+        resetGame(rooms, roomId)
+      }
 
       socket.to(roomId).emit("gameWinnerFound", {
         success: true,
