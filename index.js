@@ -47,7 +47,7 @@ app.get("", async (req, res) => {
 })
 app.use(express.json())
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
-// app.use("", checkFirebaseToken)
+app.use("", checkFirebaseToken)
 
 app.use(
   "",

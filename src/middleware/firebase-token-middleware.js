@@ -3,7 +3,7 @@ const db = require("../models")
 
 // middleware to check that the given token is correct
 const checkFirebaseToken = async (req, res, next) => {
-  const _firebaseToken = req.headers["auth-token"]
+  const _firebaseToken = req.headers["id-token"]
   if (_firebaseToken == null) {
     return res.status(401).send("Unauthorized.")
   }

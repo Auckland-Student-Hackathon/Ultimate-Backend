@@ -57,14 +57,17 @@ userRoute.route("/user")
       }).select("").lean().exec()
       if (check !== null) {
         // The user already exist
-        return res.status(200).send("ok")
+        return res.status(400).send("The user already exist.")
       }
       const newUser = await User.findOneAndUpdate({
         uid: headerUid,
       }, {
         uid: headerUid,
         name: data.name,
-        email: data.email
+        email: data.email,
+        points: 0,
+        wins: 0,
+        loses: 0
       }, { upsert: true, new: true }).select("").lean().exec()
 
       return res.status(200).json(newUser["_id"])
