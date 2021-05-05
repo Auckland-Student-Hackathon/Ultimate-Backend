@@ -83,7 +83,10 @@ const handleGame = (socket, uid) => {
       console.log("players", players)
       console.log("winnerUid", winnerUid)
 
-      await gameFinishedFunction(players, winnerUid)
+      // Do not add points if the game was a draw
+      if (winnerUid !== "draw") {
+        await gameFinishedFunction(players, winnerUid)
+      }
 
       // Reset the game
       if (roomObj["mode"] === GAME_MODE_TYPE["Tic-Tac-Toe"]) {

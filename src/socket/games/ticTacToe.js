@@ -54,8 +54,10 @@ const calculateWinner = (roomObject) => {
   const checkObj = {}
   const players = []
   let winnerUid = null
+  let totalMoves = 0
   for (const obj of gameObject) {
     if (obj.playerUid !== null) {
+      totalMoves += 1
       if (checkObj[obj.playerUid] === undefined) {
         checkObj[obj.playerUid] = [obj.id]
         players.push(obj.playerUid)
@@ -65,12 +67,61 @@ const calculateWinner = (roomObject) => {
           obj.id
         ]
       }
-      if (obj.id === 9) {
-        winnerUid = obj.playerUid
+    }
+  }
+
+  // is a draw
+  if (totalMoves === 9) {
+    return "draw"
+  }
+
+  for (player of players) {
+    const currentCheckArray = checkObj[player]
+    // top left corner to bottom right
+    if (
+      currentCheckArray.includes(1) &&
+      currentCheckArray.includes(5) &&
+      currentCheckArray.includes(9)
+    ) {
+      winnerUid = player
+      break
+    }
+
+    // top right corner to bottom left
+    if (
+      currentCheckArray.includes(3) &&
+      currentCheckArray.includes(5) &&
+      currentCheckArray.includes(7)
+    ) {
+      winnerUid = player
+      break
+    }
+
+    // check each row
+    for (let row = 1; row <= 9; row += 3) {
+      if (
+        currentCheckArray.includes(row) &&
+        currentCheckArray.includes(row + 1) &&
+        currentCheckArray.includes(row + 2)
+      ) {
+        winnerUid = player
+        break
+      }
+    }
+
+    // check each column
+    for (let column = 1; column <= 3; column += 1) {
+      if (
+        currentCheckArray.includes(column) &&
+        currentCheckArray.includes(column + 3) &&
+        currentCheckArray.includes(column + 6)
+      ) {
+        winnerUid = player
         break
       }
     }
   }
+
   console.log("checkObj", checkObj)
   console.log("players", players)
   return winnerUid
