@@ -1,12 +1,12 @@
 <h1 align="center">
 	<br>
-	<a height="200" href="#" target="_blank" alt="Link to application"><img src="https://i.imgur.com/jSRNkXH.jpg" alt="Random image" width="200"></a>
+	<a height="200" href="#" target="_blank" alt="Link to application"><img src="" alt="Ultimate Game Center - Image" width="200" height="200"></a>
 	<br>
 	<br>
 	<p>Ultimate Game Center - Backend</p>
 </h1>
 
-<h4 align="center">An ultimate game center platform created for the <a href="#" target="_blank" alt="Link to skills me">SkillsMe</a> Hackathon</h4>
+<h4 align="center">The Ultimate Game Center platform created for the <a href="#" target="_blank" alt="Link to skills me">SkillsMe</a> Hackathon</h4>
 
 <p align="center">
 		<img src="https://img.shields.io/badge/Hackathon-Ready-brightgreen">
@@ -24,7 +24,7 @@
 
 ## Demo
 
-https://youtu.be/TAePkx2504o
+https://www.google.com
 
 ## Deploy link
 
@@ -33,8 +33,8 @@ Go to https://ultimate-game-center-test.herokuapp.com/
 ## Local Instance
 
 ```sh
-git clone https://github.com/Auckland-Student-Hackathon/Ultimate-Backend.git ./backend
-git clone https://github.com/Auckland-Student-Hackathon/Ultimate-Frontend.git ./frontend
+git clone https://github.com/Auckland-Student-Hackathon/Ultimate-Backend.git
+git clone https://github.com/Auckland-Student-Hackathon/Ultimate-Frontend.git
 ```
 
 and then
@@ -74,7 +74,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Authors
 
-> LinkedIn [Bob Liou](httpshttps://www.linkedin.com/in/bob-liou/) &nbsp;&middot;&nbsp;
-> Github [@BobTheSoftwareDeveloper](https://github.com/BobTheSoftwareDeveloper)
-> LinkedIn [Taylor Tran](www.linkedin.com/in/taylor-tran-0024) &nbsp;&middot;&nbsp;
-> Github [@teinnt](https://github.com/teinnt) &nbsp;&middot;&nbsp;
+> LinkedIn [Bob Liou](https://www.linkedin.com/in/bob-liou/) &nbsp;&middot;&nbsp; <br />
+> Github [@BobTheSoftwareDeveloper](https://github.com/BobTheSoftwareDeveloper) <br />
+> LinkedIn [Taylor Tran](www.linkedin.com/in/taylor-tran-0024) &nbsp;&middot;&nbsp;<br />
+> Github [@teinnt](https://github.com/teinnt) &nbsp;&middot;&nbsp;<br />
