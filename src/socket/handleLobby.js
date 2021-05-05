@@ -92,12 +92,14 @@ const handleLobby = (socket, uid) => {
     rooms[roomId]["started"] = true
     socket.to(roomId).emit("startGameResponse", {
       success: true,
-      message: `Game is starting!`
+      message: `Game is starting!`,
+      mode: roomObj["mode"]
     })
 
     return socket.emit("startGameResponse", {
       success: true,
-      message: `Game is starting!`
+      message: `Game is starting!`,
+      mode: roomObj["mode"]
     })
   })
 }
