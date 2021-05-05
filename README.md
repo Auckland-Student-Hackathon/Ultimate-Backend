@@ -19,7 +19,7 @@
 		<a href="#key-features">Key Features</a> •
 		<a href="#local-instance">Local Instance</a> •
 		<a href="#license">License</a> •
-		<a href="#author">Author</a>
+		<a href="#authors">Authors</a>
 </p>
 
 ## Demo
