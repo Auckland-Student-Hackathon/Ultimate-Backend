@@ -1,6 +1,6 @@
 <h1 align="center">
 	<br>
-	<a height="200" href="#" target="_blank" alt="Link to application"><img src="" alt="Ultimate Game Center - Image" width="200" height="200"></a>
+	<a height="200" href="#" target="_blank" alt="Link to application"><img src="https://github.com/Auckland-Student-Hackathon/Ultimate-Backend/blob/main/swords.png" alt="Ultimate Game Center - Image" width="200" height="200"></a>
 	<br>
 	<br>
 	<p>Ultimate Game Center - Backend</p>
@@ -28,7 +28,9 @@ https://www.google.com
 
 ## Deploy link
 
-Go to https://ultimate-game-center-test.herokuapp.com/
+Frontend URL: https://ultimate-game-center.herokuapp.com/ <br />
+Server URL: https://ultimate-game-center-backend.herokuapp.com/ <br />
+Server Documentation: https://ultimate-game-center-backend.herokuapp.com/docs/
 
 ## Local Instance
 
